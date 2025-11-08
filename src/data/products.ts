@@ -1,0 +1,68 @@
+import { Product } from '@/store/cartStore';
+
+export const mockProducts: Product[] = [
+  {
+    id: 1,
+    name: 'Premium Wireless Headphones',
+    price: 299.99,
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&h=500&fit=crop',
+    category: 'Electronics',
+    description: 'High-quality wireless headphones',
+  },
+  {
+    id: 2,
+    name: 'Smart Watch Pro',
+    price: 399.99,
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&h=500&fit=crop',
+    category: 'Electronics',
+    description: 'Advanced fitness tracking and notifications',
+  },
+  {
+    id: 3,
+    name: 'Designer Sunglasses',
+    price: 159.99,
+    image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&h=500&fit=crop',
+    category: 'Fashion',
+    description: 'Stylish UV protection sunglasses',
+  },
+  {
+    id: 4,
+    name: 'Leather Backpack',
+    price: 189.99,
+    image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&h=500&fit=crop',
+    category: 'Fashion',
+    description: 'Premium leather laptop backpack',
+  },
+  {
+    id: 5,
+    name: 'Portable Speaker',
+    price: 129.99,
+    image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&h=500&fit=crop',
+    category: 'Electronics',
+    description: 'Waterproof bluetooth speaker',
+  },
+  {
+    id: 6,
+    name: 'Running Shoes',
+    price: 149.99,
+    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&h=500&fit=crop',
+    category: 'Sports',
+    description: 'Lightweight performance running shoes',
+  },
+  {
+    id: 7,
+    name: 'Minimalist Wallet',
+    price: 49.99,
+    image: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=500&h=500&fit=crop',
+    category: 'Fashion',
+    description: 'Slim leather card holder',
+  },
+  {
+    id: 8,
+    name: 'Wireless Earbuds',
+    price: 179.99,
+    image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&h=500&fit=crop',
+    category: 'Electronics',
+    description: 'True wireless earbuds with charging case',
+  },
+];
