@@ -1,83 +1,167 @@
-# 💬 Sam’s Flow Builder
+# 🛍️ Vibe Commerce
 
-A modern, minimal **Chatbot Flow Builder** built using **React Flow**, **TypeScript**, and **Shadcn UI**.  
-This project allows users to visually create chatbot message flows by dragging and connecting message nodes.
+> A modern full-stack e-commerce web application built with **React + TypeScript + Node + MongoDB**, featuring a sleek UI, state persistence with **Zustand**, and dummy payments using **Razorpay**.
 
 ---
-
-## 🚀 Preview 
-[🔗 Live Demo](https://chatbot-flow-builder-theta-livid.vercel.app/)
-
 ### 🌙 Dark Theme
-![Dark Theme Screenshot](public/builder-dark.png)
+![Dark Theme Screenshot](public/ecom-dark.png)
 
 ### 💡 Light Theme
-![Light Theme Screenshot](public/builder-light.png)
+![Light Theme Screenshot](public/ecom-light.png)
 
-## 🚀 Overview
 
-This flow builder lets you design conversational flows with **Text Message Nodes** — connect them visually using React Flow’s node-based interface.  
-The UI is built with **Shadcn UI**, styled with **Tailwind CSS**, and includes **light/dark theme switching**.
+## 🚀 Tech Stack
 
----
+### **Frontend**
 
-## ✨ Features
+* ⚛️ **React (Vite)** – Fast, modular frontend
+* 🎨 **Tailwind CSS** – Utility-first styling
+* 🧩 **shadcn/UI** – Accessible, pre-styled UI components
+* 💡 **TypeScript** – Strict, scalable typing
+* 🪣 **Zustand** – Lightweight global state management
+* 💳 **Razorpay Integration** – Dummy payment gateway
+* 📱 **Responsive Design** – Optimized for mobile & desktop
 
-### 🧩 Flow Builder
-- Drag and drop **Text Nodes** from the **Nodes Panel**.
-- Each node represents a chatbot message.
-- Click a node to open the **Settings Panel** and edit its message text.
-- Delete nodes individually from within the flow.
-- Connect nodes using **edges** to define the conversation path.
+### **Backend**
 
-### 🔗 Edge Rules
-- Each node’s **source handle** (right side) can only have **one outgoing connection**.
-- Each node’s **target handle** (left side) can accept **multiple incoming connections**.
-
-### ⚙️ Settings Panel
-- Appears when a node is selected.
-- Allows editing the message text.
-- Placeholder text is shown for new nodes (input starts empty).
-
-### 🧱 Nodes Panel
-- Contains the available node types (currently only the **Text Node**).
-- Built to be **extensible** — easily add more node types later.
-- Built Delete Node functionality when hover on the Node.
-
-### 💾 Save Validation
-- Validates the flow before saving:
-  - Shows an error if **multiple nodes** lack incoming connections.
-  - Displays a centered error message banner: *“Cannot save Flow”*.
-- On successful validation, displays: *“Flow saved successfully!”* via toast.
-
-### 🌓 Theme Support
-- Includes a **Theme Toggle** (light/dark mode) built using **Shadcn UI**’s theme system.
-- The entire app responds to theme changes instantly.
+* 🟢 **Node.js** + **Express** – RESTful API framework
+* 🍃 **MongoDB** – NoSQL database for product & cart storage
+* 🔗 **Mongoose** – Schema modeling and validation
 
 ---
 
-## 🧠 Tech Stack
+## 🧠 Core Features
 
-| Tool / Library | Purpose |
-|----------------|----------|
-| **React 18 + TypeScript** | Core frontend framework |
-| **Vite** | Fast build tool and dev server |
-| **Tailwind CSS** | Styling and theming |
-| **Shadcn UI** | UI components (Button, Input, Dialog, etc.) |
-| **React Flow** | Flow builder and node-based canvas |
-| **Lucide Icons** | Beautiful, lightweight icons |
-| **Sonner** | Toast notifications |
-| **Framer Motion (optional)** | Animations (for transitions) |
+### 🖥️ Frontend (UI / UX)
+
+* **Product Grid:**
+  Displays all products with image, category, price, and “Add to Cart” button.
+* **Cart View:**
+
+  * Displays selected items with quantity controls
+  * Real-time total calculation
+  * Add / Update / Remove functionality
+* **Checkout Modal:**
+
+  * Collects user info (name + email)
+  * Triggers Razorpay dummy payment
+  * Shows success receipt modal after payment
+* **Receipt Modal:**
+  Displays purchased items, total amount, and user details.
+* **Animations & Transitions:**
+  Powered by Framer Motion for smooth UI flows.
+* **Fully Responsive:**
+  Seamless experience across mobile and desktop.
 
 ---
 
-## ⚙️ Installation & Setup
+### ⚙️ Backend (API Endpoints)
 
-### 1️⃣ Clone the repository
+#### 🛒 **Cart Routes**
+
+```ts
+// Fetch all cart items
+router.get("/", async (req, res) => {
+  const result = await cartController.getCart();
+  res.status(result.status).json(result);
+});
+
+// Add product to cart
+router.post("/", async (req, res) => {
+  const { productId, qty } = req.body;
+  const result = await cartController.addToCart(productId, qty);
+  res.status(result.status).json(result);
+});
+
+// Remove product from cart
+router.delete("/:id", async (req, res) => {
+  const result = await cartController.removeFromCart(req.params.id);
+  res.status(result.status).json(result);
+});
+```
+
+#### 📦 **Product Routes**
+
+```ts
+// Get all products
+router.get("/", async (req, res) => {
+  const data = await productController.getProducts();
+  res.status(data.status).send(data);
+});
+
+// Get product by ID
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const data = await productController.getProductById(id);
+  res.status(data.status).send(data);
+});
+```
+
+#### 💳 **Checkout Route**
+
+```ts
+router.get("/", async (req, res) => {
+  const { name, email } = req.query;
+  const data = await checkoutController.checkout(name as string, email as string);
+  res.status(data.status).send(data);
+});
+```
+
+---
+
+## 🧱 Architecture Overview
+
+**Frontend → Backend → Database Flow:**
+
+1. Frontend fetches products from the API.
+2. Users add items to cart (Zustand stores state).
+3. Cart changes are synced via REST API to MongoDB.
+4. Checkout Modal opens → Razorpay dummy payment → Success Receipt.
+5. Orders reset after receipt confirmation.
+
+---
+
+## 🧾 Payment Integration
+
+* Integrated **Razorpay Checkout SDK** for testing dummy transactions.
+* Uses Razorpay test key.
+* Prefilled test data (name, email, contact).
+* On successful payment → Receipt Modal appears.
+
+---
+
+## 🧪 Setup & Run
+
+### 1️⃣ Clone Frontend
+
 ```bash
-git clone https://github.com/SamuelMasih777/chatbot-flow-builder.git
-cd chatbot-flow-builder
+git clone https://github.com/SamuelMasih777/vibe-ecom-frontend
+cd vibe-ecom-frontend
+```
 
-npm install 
+### 3️⃣ Frontend Setup
 
+```bash
+npm install
 npm run dev
+```
+
+Access → [http://localhost:5173](http://localhost:5173)
+
+---
+
+## 🎯 Future Improvements
+
+* Add JWT-based user auth & login cart sync & pagination & search functionality & many other improvements
+* Order history & invoice generation
+* Cloudinary for product images
+* Admin dashboard for CRUD operations
+* Deployed version with CI/CD pipeline
+
+---
+
+## 👨‍💻 Author
+
+**Samuel Masih**
+Full-Stack Developer | React ⚛️ • Node 🟢 • TypeScript 🧩
+Building clean, scalable apps with precision & great UX.
